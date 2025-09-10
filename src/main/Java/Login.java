@@ -1,84 +1,62 @@
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class Login extends JFrame {
-
-    private JTextField campoUsuario;
-    private JPasswordField campoSenha;
-    private JButton btnEntrar;
+    private JTextField txtUsuario;
+    private JPasswordField txtSenha;
+    private JButton btnLogin;
 
     public Login() {
-        setTitle("Login");
-        setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Sistema - Login");
+        setSize(360, 220);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(3, 2));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(new JLabel("Usuário:"));
-        campoUsuario = new JTextField();
-        add(campoUsuario);
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
+        painelPrincipal.setBorder(BorderFactory.createEmptyBorder(15, 30, 15, 30));
 
-        add(new JLabel("Senha:"));
-        campoSenha = new JPasswordField();
-        add(campoSenha);
+        JLabel titulo = new JLabel("Bem-vindo ao Sistema", JLabel.CENTER);
+        titulo.setFont(new Font("Tahoma", Font.BOLD, 18));
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
 
-        btnEntrar = new JButton("Entrar");
-        add(btnEntrar);
+        txtUsuario = new JTextField(14);
+        txtUsuario.setBorder(BorderFactory.createTitledBorder("Usuário"));
 
-        btnEntrar.addActionListener(e -> {
-            String usuario = campoUsuario.getText();
-            String senha = String.valueOf(campoSenha.getPassword());
+        txtSenha = new JPasswordField(14);
+        txtSenha.setBorder(BorderFactory.createTitledBorder("Senha"));
 
-            Connection con = Conexao.conectar();
-            if (con != null) {
-                try {
-                    String sql = "SELECT * FROM usuarios WHERE usuario = ? AND senha = ?";
-                    PreparedStatement ps = con.prepareStatement(sql);
-                    ps.setString(1, usuario);
-                    ps.setString(2, senha);
-                    ResultSet rs = ps.executeQuery();
+        btnLogin = new JButton("Entrar");
+        btnLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnLogin.setPreferredSize(new Dimension(90, 35));
 
-                    if (rs.next()) {
-                        JOptionPane.showMessageDialog(null,
-                                "Login realizado! Perfil: " + rs.getString("perfil"));
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!");
-                    }
+        painelPrincipal.add(titulo);
+        painelPrincipal.add(txtUsuario);
+        painelPrincipal.add(Box.createVerticalStrut(10));
+        painelPrincipal.add(txtSenha);
+        painelPrincipal.add(Box.createVerticalStrut(15));
+        painelPrincipal.add(btnLogin);
 
-                    con.close();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+        add(painelPrincipal);
+
+        btnLogin.addActionListener(e -> {
+            String usuario = txtUsuario.getText();
+            String senha = new String(txtSenha.getPassword());
+
+            if ("admin".equals(usuario) && "123".equals(senha)) {
+                dispose();
+                new Home();
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos");
             }
         });
 
         setVisible(true);
     }
 
-    private boolean verificarLogin(String usuario, String senha) {
-        if (usuario.equals("admin") && senha.equals("admin123")) {
-            JOptionPane.showMessageDialog(this, "Bem-vindo Administrador!");
-            return true;
-        } else if (usuario.equals("gerente") && senha.equals("gerente123")) {
-            JOptionPane.showMessageDialog(this, "Bem-vindo Gerente!");
-            return true;
-        } else if (usuario.equals("colab") && senha.equals("colab123")) {
-            JOptionPane.showMessageDialog(this, "Bem-vindo Colaborador!");
-            return true;
-        } else if (usuario.equals("estagiario") && senha.equals("estagiario123")) {
-            JOptionPane.showMessageDialog(this, "Bem-vindo Estagiário!");
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!");
-            return false;
-        }
-    }
-
     public static void main(String[] args) {
         new Login();
     }
 }
-
