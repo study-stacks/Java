@@ -64,7 +64,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "minha-feature",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -134,7 +134,7 @@
       <workItem from="1757630186590" duration="31000" />
       <workItem from="1757630248080" duration="820000" />
       <workItem from="1757631138358" duration="55000" />
-      <workItem from="1757631485284" duration="1432000" />
+      <workItem from="1757631485284" duration="2475000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />
