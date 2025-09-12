@@ -5,20 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Beta 1">
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Projetos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Projetos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Home.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="PATH_TO_GIT" value="C:\Program Files\Git\bin\git.exe" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="UPDATE_TYPE" value="REBASE" />
@@ -29,12 +34,15 @@
     &quot;assignee&quot;: &quot;guborzani&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/study-stacks/Java.git&quot;,
-    &quot;accountId&quot;: &quot;14928dd4-bfd6-4bdb-8dca-50fb3e153c64&quot;
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="8ea65c8e-5baf-42f5-9f5a-3330d4b35727" />
+  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/study-stacks/Java.git",
+    "accountId": "14928dd4-bfd6-4bdb-8dca-50fb3e153c64"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -54,7 +62,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "#11 on minha-feature",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/guilh/OneDrive/Documentos/GitHub/Java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,6 +75,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -108,6 +120,21 @@
       <workItem from="1757287069535" duration="1104000" />
       <workItem from="1757373413043" duration="2718000" />
       <workItem from="1757376156804" duration="718000" />
+      <workItem from="1757627787430" duration="140000" />
+      <workItem from="1757627989992" duration="115000" />
+      <workItem from="1757628161433" duration="173000" />
+      <workItem from="1757628472772" duration="21000" />
+      <workItem from="1757628515820" duration="20000" />
+      <workItem from="1757628572301" duration="118000" />
+      <workItem from="1757628723630" duration="58000" />
+      <workItem from="1757628812919" duration="77000" />
+      <workItem from="1757628919219" duration="30000" />
+      <workItem from="1757628994105" duration="1095000" />
+      <workItem from="1757630186590" duration="31000" />
+      <workItem from="1757630248080" duration="820000" />
+      <workItem from="1757631138358" duration="55000" />
+      <workItem from="1757631485284" duration="1432000" />
+      <workItem from="1757635195425" duration="315000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />
@@ -136,7 +163,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
