@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Beta 1">
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Projetos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Relatorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Projetos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Projetos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Home.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,12 +37,12 @@
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="8ea65c8e-5baf-42f5-9f5a-3330d4b35727" />
   </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/study-stacks/Java.git&quot;,
-    &quot;accountId&quot;: &quot;8ea65c8e-5baf-42f5-9f5a-3330d4b35727&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/study-stacks/Java.git",
+    "accountId": "14928dd4-bfd6-4bdb-8dca-50fb3e153c64"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -64,9 +62,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "#11 on minha-feature",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/guilh/OneDrive/Documentos/GitHub/Java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -135,6 +134,7 @@
       <workItem from="1757630248080" duration="820000" />
       <workItem from="1757631138358" duration="55000" />
       <workItem from="1757631485284" duration="1432000" />
+      <workItem from="1757635195425" duration="315000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />

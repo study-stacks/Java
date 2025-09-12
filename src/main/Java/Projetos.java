@@ -6,7 +6,6 @@ public class Projetos {
     private String status;
     private String responsavel;
 
-    // Construtor
     public Projetos(String nome, String descricao, String dataInicio, String dataFim, String status, String responsavel) {
         this.nome = nome;
         this.descricao = descricao;
@@ -16,7 +15,6 @@ public class Projetos {
         this.responsavel = responsavel;
     }
 
-    // Getters e Setters
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
@@ -35,7 +33,6 @@ public class Projetos {
     public String getResponsavel() { return responsavel; }
     public void setResponsavel(String responsavel) { this.responsavel = responsavel; }
 
-    // Para exibir o projeto no JTextArea
     @Override
     public String toString() {
         return "Projeto: " + nome +
