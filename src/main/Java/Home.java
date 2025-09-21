@@ -8,7 +8,7 @@ public class Home extends JFrame {
 
     public Home() {
         setTitle("Sistema - Home");
-        setSize(600, 400);
+        setSize(900, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -24,23 +24,20 @@ public class Home extends JFrame {
 
         JPanel abaInicio = new JPanel();
         abaInicio.add(new JLabel("Você está na página inicial!"));
-        abas.addTab("Início", abaInicio);;
+        abas.addTab("Início", abaInicio);
 
-        JPanel abaUsuario = new JPanel();
-        abaUsuario.add(new JLabel("Gerenciamento de usuários aqui."));
-        abas.addTab("Usuários", abaUsuario);;
+        TelaUsuarios telaUsuarios = new TelaUsuarios();
+        abas.addTab("Usuários", telaUsuarios);
 
         JPanel painelProjetos = new JPanel(new BorderLayout());
         JTextArea areaProjetos = new JTextArea();
         painelProjetos.add(new JScrollPane(areaProjetos), BorderLayout.CENTER);
-
         JButton btnMostrarProjetos = new JButton("Mostrar Projetos");
         painelProjetos.add(btnMostrarProjetos, BorderLayout.SOUTH);
-
         abas.addTab("Projetos", painelProjetos);
 
         btnMostrarProjetos.addActionListener(e -> {
-            areaProjetos.setText(""); // limpa
+            areaProjetos.setText("");
             for (Projetos p : listaProjetos) {
                 areaProjetos.append(p + "\n");
             }
@@ -48,11 +45,11 @@ public class Home extends JFrame {
 
         JPanel abaEquipe = new JPanel();
         abaEquipe.add(new JLabel("Área de equipes aqui."));
-        abas.addTab("Equipe", abaEquipe);;
+        abas.addTab("Equipe", abaEquipe);
 
         JPanel abaTarefas = new JPanel();
         abaTarefas.add(new JLabel("Gerenciamento de tarefas aqui."));
-        abas.addTab("Tarefas", abaTarefas);;
+        abas.addTab("Tarefas", abaTarefas);
 
         JPanel abaRelatorios = new JPanel(new BorderLayout());
         JTextArea areaRelatorio = new JTextArea();
@@ -61,10 +58,8 @@ public class Home extends JFrame {
         JPanel painelBotoesRelatorio = new JPanel(new FlowLayout());
         JButton btnGerarRelatorio = new JButton("Gerar Relatório");
         JButton btnImprimirRelatorio = new JButton("Imprimir Relatório");
-
         painelBotoesRelatorio.add(btnGerarRelatorio);
         painelBotoesRelatorio.add(btnImprimirRelatorio);
-
         abaRelatorios.add(painelBotoesRelatorio, BorderLayout.SOUTH);
 
         btnGerarRelatorio.addActionListener(e -> {
@@ -81,7 +76,7 @@ public class Home extends JFrame {
 
         btnImprimirRelatorio.addActionListener(e -> {
             try {
-                boolean complete = areaRelatorio.print(); // usa o print nativo do JTextArea
+                boolean complete = areaRelatorio.print();
                 if (complete) {
                     JOptionPane.showMessageDialog(this, "Relatório enviado para impressão!");
                 } else {
@@ -101,17 +96,12 @@ public class Home extends JFrame {
         abas.addTab("Sair", abaSair);
 
         painelPrincipal.add(abas, BorderLayout.CENTER);
-
-        add(painelPrincipal);
-
-        painelPrincipal.add(abas, BorderLayout.CENTER);
-
         add(painelPrincipal);
 
         carregarProjetosExemplo();
-
         setVisible(true);
     }
+
     private void carregarProjetosExemplo() {
         listaProjetos.add(new Projetos("Projeto A", "Descrição A", "01/09/2025", "30/09/2025", "Planejado", "Caio"));
         listaProjetos.add(new Projetos("Projeto B", "Descrição B", "05/09/2025", "10/10/2025", "Em andamento", "Caio"));
