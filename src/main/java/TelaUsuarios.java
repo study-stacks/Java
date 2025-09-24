@@ -14,7 +14,7 @@ public class TelaUsuarios extends JPanel {
     private JComboBox<String> boxPerfil;
     private JButton btnNovo, btnSalvar, btnExcluir;
 
-    private List<Home.Usuario> listaUsuarios = new ArrayList<>();
+    private List<Usuario> listaUsuarios = new ArrayList<>();
 
     public TelaUsuarios() {
         setLayout(null);
@@ -92,18 +92,18 @@ public class TelaUsuarios extends JPanel {
         btnNovo.addActionListener(e -> limparFormulario());
     }
 
-    public List<Home.Usuario> getListaUsuarios() {
+    public List<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public void setListaUsuarios(List<Home.Usuario> listaUsuarios) {
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
         atualizarTabela();
     }
 
     private void salvarUsuario() {
         String id = String.valueOf(listaUsuarios.size() + 1);
-        Home.Usuario novoUsuario = new Home.Usuario(
+        Usuario novoUsuario = new Usuario(
                 id,
                 txtNome.getText(),
                 txtCpf.getText(),
@@ -141,7 +141,7 @@ public class TelaUsuarios extends JPanel {
 
     public void atualizarTabela() {
         modelo.setRowCount(0);
-        for (Home.Usuario u : listaUsuarios) {
+        for (Usuario u : listaUsuarios) {
             Object[] dados = {
                     u.getId(),
                     u.getNome(),

@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Debug">
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Usuario.java" afterDir="false" />
+    <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Tarefas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Tarefas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Tarefas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/TelaUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/TelaUsuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/CadastroProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Conexao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Conexao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Projeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Projeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Projetos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Relatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Relatorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Tarefas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tarefas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/TelaUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Usuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Home.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Projetos.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,12 +43,12 @@
     &quot;assignee&quot;: &quot;guborzani&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/study-stacks/Java.git&quot;,
-    &quot;accountId&quot;: &quot;14928dd4-bfd6-4bdb-8dca-50fb3e153c64&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/study-stacks/Java.git",
+    "accountId": "14928dd4-bfd6-4bdb-8dca-50fb3e153c64"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -54,38 +61,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Java.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Login.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#15 on Vonrenis-patch-4&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/guilh/OneDrive/Documentos/GitHub/Java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/guilh/IdeaProjects/Java/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.CommitDialog&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Java.executor": "Run",
+    "Application.Login.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "#16 on minha-feature",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/guilh/IdeaProjects/Java/src/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\guilh\OneDrive\Documentos\GitHub\Java\src\main\Java" />
       <recent name="C:\Users\guilh\IdeaProjects\Java\src\main\Java" />
       <recent name="C:\Users\guilh\IdeaProjects\Java\src\main\java" />
       <recent name="C:\Users\guilh\IdeaProjects\Java" />
       <recent name="C:\Users\guilh\IdeaProjects\Java\Java" />
+      <recent name="C:\Users\guilh\IdeaProjects\Java\.idea" />
     </key>
   </component>
   <component name="RunManager">
@@ -133,12 +148,16 @@
       <workItem from="1757630186590" duration="31000" />
       <workItem from="1757630248080" duration="820000" />
       <workItem from="1757631138358" duration="55000" />
-      <workItem from="1757631485284" duration="1432000" />
-      <workItem from="1757635195425" duration="315000" />
-      <workItem from="1758492119354" duration="1027000" />
-      <workItem from="1758493166284" duration="2137000" />
-      <workItem from="1758660872809" duration="113000" />
-      <workItem from="1758661013334" duration="1238000" />
+      <workItem from="1757631485284" duration="2475000" />
+      <workItem from="1758666522840" duration="54000" />
+      <workItem from="1758666639643" duration="11000" />
+      <workItem from="1758666669159" duration="22000" />
+      <workItem from="1758666717275" duration="13000" />
+      <workItem from="1758666760858" duration="109000" />
+      <workItem from="1758666906723" duration="567000" />
+      <workItem from="1758667635275" duration="3866000" />
+      <workItem from="1758671729657" duration="1212000" />
+      <workItem from="1758673822088" duration="1549000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />
@@ -156,15 +175,7 @@
       <option name="project" value="LOCAL" />
       <updated>1757287436107</updated>
     </task>
-    <task id="LOCAL-00003" summary="Debug">
-      <option name="closed" value="true" />
-      <created>1758494086287</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1758494086287</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,8 +206,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Beta 1" />
-    <MESSAGE value="Debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Beta 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
