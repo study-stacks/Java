@@ -1,12 +1,11 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelaUsuarios extends JPanel {
-
     private JTable tabela;
     private DefaultTableModel modelo;
     private JTextField txtNome, txtCpf, txtEmail, txtCargo, txtLogin;
@@ -16,76 +15,71 @@ public class TelaUsuarios extends JPanel {
 
     private List<Usuario> listaUsuarios = new ArrayList<>();
 
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+
     public TelaUsuarios() {
-        setLayout(null);
+        setLayout(new BorderLayout(10, 10));
+        setBorder(BorderFactory.createTitledBorder("Gerenciamento de Usuários"));
 
         String[] colunas = {"ID", "Nome", "CPF", "Email", "Cargo", "Login", "Perfil"};
-        modelo = new DefaultTableModel(colunas, 0);
+        modelo = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tabela = new JTable(modelo);
+        tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane rolagem = new JScrollPane(tabela);
-        rolagem.setBounds(10, 10, 500, 360);
-        add(rolagem);
+        add(rolagem, BorderLayout.CENTER);
 
-        JLabel l1 = new JLabel("Nome:");
-        l1.setBounds(520, 10, 60, 25);
-        add(l1);
+        JPanel painelCadastro = new JPanel(new BorderLayout(10, 10));
+        painelCadastro.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição de Usuários"));
+
+        JPanel painelCampos = new JPanel(new GridLayout(0, 2, 5, 5));
+
+        painelCampos.add(new JLabel("Nome:"));
         txtNome = new JTextField();
-        txtNome.setBounds(580, 10, 180, 25);
-        add(txtNome);
+        painelCampos.add(txtNome);
 
-        JLabel l2 = new JLabel("CPF:");
-        l2.setBounds(520, 45, 60, 25);
-        add(l2);
+        painelCampos.add(new JLabel("CPF:"));
         txtCpf = new JTextField();
-        txtCpf.setBounds(580, 45, 180, 25);
-        add(txtCpf);
+        painelCampos.add(txtCpf);
 
-        JLabel l3 = new JLabel("Email:");
-        l3.setBounds(520, 80, 60, 25);
-        add(l3);
+        painelCampos.add(new JLabel("Email:"));
         txtEmail = new JTextField();
-        txtEmail.setBounds(580, 80, 180, 25);
-        add(txtEmail);
+        painelCampos.add(txtEmail);
 
-        JLabel l4 = new JLabel("Cargo:");
-        l4.setBounds(520, 115, 60, 25);
-        add(l4);
+        painelCampos.add(new JLabel("Cargo:"));
         txtCargo = new JTextField();
-        txtCargo.setBounds(580, 115, 180, 25);
-        add(txtCargo);
+        painelCampos.add(txtCargo);
 
-        JLabel l5 = new JLabel("Login:");
-        l5.setBounds(520, 150, 60, 25);
-        add(l5);
+        painelCampos.add(new JLabel("Login:"));
         txtLogin = new JTextField();
-        txtLogin.setBounds(580, 150, 180, 25);
-        add(txtLogin);
+        painelCampos.add(txtLogin);
 
-        JLabel l6 = new JLabel("Senha:");
-        l6.setBounds(520, 185, 60, 25);
-        add(l6);
+        painelCampos.add(new JLabel("Senha:"));
         txtSenha = new JPasswordField();
-        txtSenha.setBounds(580, 185, 180, 25);
-        add(txtSenha);
+        painelCampos.add(txtSenha);
 
-        JLabel l7 = new JLabel("Perfil:");
-        l7.setBounds(520, 220, 60, 25);
-        add(l7);
+        painelCampos.add(new JLabel("Perfil:"));
         boxPerfil = new JComboBox<>(new String[]{"Administrador", "Gerente", "Colaborador", "Estagiário"});
-        boxPerfil.setBounds(580, 220, 180, 25);
-        add(boxPerfil);
+        painelCampos.add(boxPerfil);
 
+        painelCadastro.add(painelCampos, BorderLayout.NORTH);
+
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnNovo = new JButton("Novo");
-        btnNovo.setBounds(520, 260, 80, 25);
-        add(btnNovo);
-
         btnSalvar = new JButton("Salvar");
-        btnSalvar.setBounds(610, 260, 80, 25);
-        add(btnSalvar);
-
         btnExcluir = new JButton("Excluir");
-        btnExcluir.setBounds(700, 260, 80, 25);
-        add(btnExcluir);
+
+        painelBotoes.add(btnNovo);
+        painelBotoes.add(btnSalvar);
+        painelBotoes.add(btnExcluir);
+
+        painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
+
+        add(painelCadastro, BorderLayout.EAST);
 
         btnSalvar.addActionListener(e -> salvarUsuario());
         btnExcluir.addActionListener(e -> excluirUsuario());
@@ -116,6 +110,8 @@ public class TelaUsuarios extends JPanel {
         atualizarTabela();
         limparFormulario();
         JOptionPane.showMessageDialog(this, "Usuário salvo com sucesso!");
+
+        changeSupport.firePropertyChange("usuariosAtualizados", null, listaUsuarios);
     }
 
     private void excluirUsuario() {
@@ -124,6 +120,8 @@ public class TelaUsuarios extends JPanel {
             listaUsuarios.remove(linha);
             atualizarTabela();
             JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
+
+            changeSupport.firePropertyChange("usuariosAtualizados", null, listaUsuarios);
         } else {
             JOptionPane.showMessageDialog(this, "Selecione uma linha para excluir.");
         }
@@ -137,6 +135,7 @@ public class TelaUsuarios extends JPanel {
         txtLogin.setText("");
         txtSenha.setText("");
         boxPerfil.setSelectedIndex(0);
+        tabela.clearSelection();
     }
 
     public void atualizarTabela() {
@@ -153,5 +152,10 @@ public class TelaUsuarios extends JPanel {
             };
             modelo.addRow(dados);
         }
+    }
+
+    @Override
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
     }
 }

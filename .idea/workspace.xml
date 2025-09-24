@@ -6,18 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Tarefas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/CadastroProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Conexao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Conexao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Projeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Projeto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Projetos.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Relatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Relatorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Tarefas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tarefas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/TelaUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Projeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Projeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Relatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Relatorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Usuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Home.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Projetos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Relatorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Relatorio.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +29,11 @@
   </component>
   <component name="Git.Settings">
     <option name="PATH_TO_GIT" value="C:\Program Files\Git\bin\git.exe" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="UPDATE_TYPE" value="REBASE" />
@@ -46,7 +47,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/study-stacks/Java.git",
-    "accountId": "14928dd4-bfd6-4bdb-8dca-50fb3e153c64"
+    "accountId": "9bce2d20-2c57-4e0b-89c1-40e7c514e45f"
   }
 }]]></component>
   <component name="ProjectColorInfo">{
@@ -69,7 +70,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#16 on minha-feature",
+    "git-widget-placeholder": "Ultima-Atualização",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -82,7 +83,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "settings.editor.selected.configurable": "project.propVCSSupport.ChangelistConflict",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
@@ -117,8 +118,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -158,6 +158,7 @@
       <workItem from="1758667635275" duration="3866000" />
       <workItem from="1758671729657" duration="1212000" />
       <workItem from="1758673822088" duration="1549000" />
+      <workItem from="1758708851907" duration="16949000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />
