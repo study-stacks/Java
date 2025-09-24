@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Tarefas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Projeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Projeto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Relatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Relatorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Home.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Relatorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Relatorio.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +75,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propVCSSupport.ChangelistConflict",
+    "settings.editor.selected.configurable": "vcs.Git",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
@@ -158,7 +150,7 @@
       <workItem from="1758667635275" duration="3866000" />
       <workItem from="1758671729657" duration="1212000" />
       <workItem from="1758673822088" duration="1549000" />
-      <workItem from="1758708851907" duration="16949000" />
+      <workItem from="1758708851907" duration="17861000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />
