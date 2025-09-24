@@ -45,44 +45,150 @@ public class Home extends JFrame {
         TelaUsuarios telaUsuarios = new TelaUsuarios();
         abas.addTab("Usuários", telaUsuarios);
 
-        // Aba Projetos
-        JPanel painelProjetos = new JPanel(new BorderLayout());
-        JTextArea areaProjetos = new JTextArea();
-        painelProjetos.add(new JScrollPane(areaProjetos), BorderLayout.CENTER);
-        JButton btnMostrarProjetos = new JButton("Mostrar Projetos");
-        painelProjetos.add(btnMostrarProjetos, BorderLayout.SOUTH);
+        // --- ABA DE PROJETOS ---
+        JPanel painelProjetos = new JPanel(new BorderLayout(10, 10));
+        painelProjetos.setBorder(BorderFactory.createTitledBorder("Gerenciamento de Projetos"));
+
+// Tabela de projetos
+        String[] colunasProjetos = {"Nome", "Responsável", "Descrição", "Status", "Início", "Fim"};
+        DefaultTableModel modeloTabelaProjetos = new DefaultTableModel(null, colunasProjetos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        JTable tabelaProjetos = new JTable(modeloTabelaProjetos);
+        tabelaProjetos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollProjetos = new JScrollPane(tabelaProjetos);
+        painelProjetos.add(scrollProjetos, BorderLayout.CENTER);
+
+// Painel de cadastro de projetos
+        JPanel painelCadastroProjetos = new JPanel(new BorderLayout(10, 10));
+        painelCadastroProjetos.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição de Projetos"));
+
+        JPanel painelCamposProjetos = new JPanel(new GridLayout(0, 2, 5, 5));
+        JTextField txtNomeProjeto = new JTextField();
+        JTextArea txtDescricaoProjeto = new JTextArea(3, 20);
+        JComboBox<Usuario> cmbResponsavelProjeto = new JComboBox<>();
+        JComboBox<String> cmbStatusProjeto = new JComboBox<>(new String[]{"Planejado", "Em andamento", "Concluído"});
+        JTextField txtDataInicioProjeto = new JTextField();
+        JTextField txtDataFimProjeto = new JTextField();
+
+        painelCamposProjetos.add(new JLabel("Nome do Projeto:"));
+        painelCamposProjetos.add(txtNomeProjeto);
+
+        painelCamposProjetos.add(new JLabel("Responsável:"));
+        painelCamposProjetos.add(cmbResponsavelProjeto);
+
+        painelCamposProjetos.add(new JLabel("Descrição:"));
+        painelCamposProjetos.add(new JScrollPane(txtDescricaoProjeto));
+
+        painelCamposProjetos.add(new JLabel("Status:"));
+        painelCamposProjetos.add(cmbStatusProjeto);
+
+        painelCamposProjetos.add(new JLabel("Data Início (dd/MM/yyyy):"));
+        painelCamposProjetos.add(txtDataInicioProjeto);
+
+        painelCamposProjetos.add(new JLabel("Data Fim (dd/MM/yyyy):"));
+        painelCamposProjetos.add(txtDataFimProjeto);
+
+        painelCadastroProjetos.add(painelCamposProjetos, BorderLayout.NORTH);
+
+// Botões
+        JPanel painelBotoesProjetos = new JPanel(new FlowLayout());
+        JButton btnNovoProjeto = new JButton("Novo");
+        JButton btnSalvarProjeto = new JButton("Salvar");
+        JButton btnExcluirProjeto = new JButton("Excluir");
+        painelBotoesProjetos.add(btnNovoProjeto);
+        painelBotoesProjetos.add(btnSalvarProjeto);
+        painelBotoesProjetos.add(btnExcluirProjeto);
+        painelCadastroProjetos.add(painelBotoesProjetos, BorderLayout.SOUTH);
+
+        painelProjetos.add(painelCadastroProjetos, BorderLayout.EAST);
         abas.addTab("Projetos", painelProjetos);
-        btnMostrarProjetos.addActionListener(e -> {
-            areaProjetos.setText("");
-            for (Projetos p : listaProjetos) {
-                areaProjetos.append(p + "\n");
+
+// === ABA RELATÓRIOS ===
+        JPanel abaRelatorios = new JPanel(new BorderLayout(10, 10));
+        JTextArea areaRelatorio = new JTextArea();
+        areaRelatorio.setEditable(false);
+        abaRelatorios.add(new JScrollPane(areaRelatorio), BorderLayout.CENTER);
+
+// Filtros
+        JPanel painelFiltros = new JPanel(new FlowLayout());
+        JComboBox<String> cmbTipoRelatorio = new JComboBox<>(new String[]{"Projetos", "Tarefas"});
+        JComboBox<String> cmbFiltroStatus = new JComboBox<>(new String[]{"Todos", "Planejado", "Em andamento", "Concluído", "Pendente", "Em execução"});
+        JButton btnGerarRelatorio = new JButton("Gerar");
+        JButton btnExportar = new JButton("Exportar TXT");
+        JButton btnImprimir = new JButton("Imprimir");
+
+        painelFiltros.add(new JLabel("Relatório:"));
+        painelFiltros.add(cmbTipoRelatorio);
+        painelFiltros.add(new JLabel("Status:"));
+        painelFiltros.add(cmbFiltroStatus);
+        painelFiltros.add(btnGerarRelatorio);
+        painelFiltros.add(btnExportar);
+        painelFiltros.add(btnImprimir);
+
+        abaRelatorios.add(painelFiltros, BorderLayout.NORTH);
+
+// Ações dos botões
+        btnGerarRelatorio.addActionListener(e -> {
+            areaRelatorio.setText("");
+            String tipo = (String) cmbTipoRelatorio.getSelectedItem();
+            String filtro = (String) cmbFiltroStatus.getSelectedItem();
+
+            if ("Projetos".equals(tipo)) {
+                areaRelatorio.append("===== RELATÓRIO DE PROJETOS =====\n");
+                for (Projetos p : listaProjetos) {
+                    if ("Todos".equals(filtro) || p.status.equals(filtro)) {
+                        areaRelatorio.append("Projeto: " + p.getTitulo() + "\n");
+                        areaRelatorio.append("Responsável: " + p.responsavel + "\n");
+                        areaRelatorio.append("Status: " + p.status + "\n");
+                        areaRelatorio.append("Período: " + p.dataInicio + " até " + p.dataFim + "\n");
+                        areaRelatorio.append("Descrição: " + p.descricao + "\n");
+                        areaRelatorio.append("---------------------------------\n");
+                    }
+                }
+            } else {
+                areaRelatorio.append("===== RELATÓRIO DE TAREFAS =====\n");
+                for (Tarefas t : listaTarefas) {
+                    if ("Todos".equals(filtro) || t.getStatus().equals(filtro)) {
+                        areaRelatorio.append("Tarefa: " + t.getTitulo() + "\n");
+                        areaRelatorio.append("Projeto: " + t.getProjetoVinculado().getTitulo() + "\n");
+                        areaRelatorio.append("Responsável: " + t.getResponsavel().getNome() + "\n");
+                        areaRelatorio.append("Status: " + t.getStatus() + "\n");
+                        areaRelatorio.append("Previsto: " + t.getDataInicioPrevista() + " até " + t.getDataFimPrevista() + "\n");
+                        areaRelatorio.append("Real: " + t.getDataInicioReal() + " até " + t.getDataFimReal() + "\n");
+                        areaRelatorio.append("---------------------------------\n");
+                    }
+                }
             }
         });
+
+        btnExportar.addActionListener(e -> {
+            try {
+                java.io.FileWriter fw = new java.io.FileWriter("relatorio.txt");
+                fw.write(areaRelatorio.getText());
+                fw.close();
+                JOptionPane.showMessageDialog(this, "Relatório exportado para relatorio.txt");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao exportar: " + ex.getMessage());
+            }
+        });
+
+        btnImprimir.addActionListener(e -> {
+            try {
+                areaRelatorio.print();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao imprimir: " + ex.getMessage());
+            }
+        });
+
+        abas.addTab("Relatórios", abaRelatorios);
 
         // --- ABA DE TAREFAS ---
         JPanel painelTarefas = criarPainelTarefas();
         abas.addTab("Tarefas", painelTarefas);
-
-        // Aba Relatórios
-        JPanel abaRelatorios = new JPanel(new BorderLayout());
-        JTextArea areaRelatorio = new JTextArea();
-        abaRelatorios.add(new JScrollPane(areaRelatorio), BorderLayout.CENTER);
-        JPanel painelBotoesRelatorio = new JPanel(new FlowLayout());
-        JButton btnGerarRelatorio = new JButton("Gerar Relatório");
-        painelBotoesRelatorio.add(btnGerarRelatorio);
-        abaRelatorios.add(painelBotoesRelatorio, BorderLayout.SOUTH);
-        btnGerarRelatorio.addActionListener(e -> {
-            areaRelatorio.setText("===== RELATÓRIO DE PROJETOS =====\n");
-            if (listaProjetos.isEmpty()) {
-                areaRelatorio.append("Nenhum projeto cadastrado.\n");
-            } else {
-                for (Projetos p : listaProjetos) {
-                    areaRelatorio.append(p + "\n");
-                }
-            }
-            areaRelatorio.append("=================================\n");
-        });
-        abas.addTab("Relatórios", abaRelatorios);
 
         // Aba Sair
         JPanel abaSair = new JPanel();
