@@ -4,19 +4,18 @@ public class Projeto {
     private String descricao;
     private String dataInicio;
     private String dataFim;
-    private String responsavel;
-    private String equipe;
+    private Usuario responsavel;
     private String status;
 
-    public Projeto(int id, String nome, String descricao, String dataInicio, String dataFim,
-                   String responsavel, String equipe, String status) {
+    public Projeto(int id, String nome, String descricao,
+                   String dataInicio, String dataFim,
+                   Usuario responsavel, String status) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.responsavel = responsavel;
-        this.equipe = equipe;
         this.status = status;
     }
 
@@ -25,8 +24,19 @@ public class Projeto {
     public String getDescricao() { return descricao; }
     public String getDataInicio() { return dataInicio; }
     public String getDataFim() { return dataFim; }
-    public String getResponsavel() { return responsavel; }
-    public String getEquipe() { return equipe; }
+    public Usuario getResponsavel() { return responsavel; }
     public String getStatus() { return status; }
+
     public void setId(int id) { this.id = id; }
+    public void setNome(String nome) { this.nome = nome; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setDataInicio(String dataInicio) { this.dataInicio = dataInicio; }
+    public void setDataFim(String dataFim) { this.dataFim = dataFim; }
+    public void setResponsavel(Usuario responsavel) { this.responsavel = responsavel; }
+    public void setStatus(String status) { this.status = status; }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }
