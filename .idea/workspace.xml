@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Beta 1">
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Projetos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Relatorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c420b4d5-0b60-4169-89e9-1d9ec9ca1f20" name="Changes" comment="Tarefas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/CadastroProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CadastroProjeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Conexao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Conexao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Projeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Projeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Projetos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Relatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Relatorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Tarefas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tarefas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/TelaUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelaUsuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Usuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Home.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Projetos.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,20 +43,18 @@
     &quot;assignee&quot;: &quot;guborzani&quot;
   }
 }</component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="8ea65c8e-5baf-42f5-9f5a-3330d4b35727" />
-  </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/study-stacks/Java.git&quot;,
-    &quot;accountId&quot;: &quot;8ea65c8e-5baf-42f5-9f5a-3330d4b35727&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/study-stacks/Java.git",
+    "accountId": "14928dd4-bfd6-4bdb-8dca-50fb3e153c64"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="32OFMOSOj49bYzCXGn3hya3x1oo" />
   <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -64,8 +69,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "minha-feature",
+    "git-widget-placeholder": "#16 on minha-feature",
     "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -77,6 +83,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -150,6 +157,7 @@
       <workItem from="1758666906723" duration="567000" />
       <workItem from="1758667635275" duration="3866000" />
       <workItem from="1758671729657" duration="1212000" />
+      <workItem from="1758673822088" duration="1549000" />
     </task>
     <task id="LOCAL-00001" summary="Beta 1">
       <option name="closed" value="true" />

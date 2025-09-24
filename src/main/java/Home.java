@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends JFrame {
-    private List<Projetos> listaProjetos = new ArrayList<>();
+    private List<Projeto> listaProjetos = new ArrayList<>();
     private List<Usuario> listaUsuarios = new ArrayList<>();
     private List<Tarefas> listaTarefas = new ArrayList<>();
 
-    // Componentes para a aba de Tarefas
     private JTable tabelaTarefas;
     private DefaultTableModel modeloTabelaTarefas;
     private JTextField txtTitulo, txtDescricao, txtDataInicioPrevista, txtDataFimPrevista, txtDataInicioReal, txtDataFimReal;
     private JComboBox<String> cmbStatus;
-    private JComboBox<Projetos> cmbProjetoVinculado;
+    private JComboBox<Projeto> cmbProjetoVinculado;
     private JComboBox<Usuario> cmbResponsavel;
     private JButton btnNovoTarefa, btnSalvarTarefa, btnExcluirTarefa;
 
@@ -36,20 +35,16 @@ public class Home extends JFrame {
 
         JTabbedPane abas = new JTabbedPane();
 
-        // Aba Início
         JPanel abaInicio = new JPanel();
         abaInicio.add(new JLabel("Você está na página inicial!"));
         abas.addTab("Início", abaInicio);
 
-        // Aba Usuários (Corrigido)
         TelaUsuarios telaUsuarios = new TelaUsuarios();
         abas.addTab("Usuários", telaUsuarios);
 
-        // --- ABA DE PROJETOS ---
         JPanel painelProjetos = new JPanel(new BorderLayout(10, 10));
         painelProjetos.setBorder(BorderFactory.createTitledBorder("Gerenciamento de Projetos"));
 
-// Tabela de projetos
         String[] colunasProjetos = {"Nome", "Responsável", "Descrição", "Status", "Início", "Fim"};
         DefaultTableModel modeloTabelaProjetos = new DefaultTableModel(null, colunasProjetos) {
             @Override
@@ -62,7 +57,6 @@ public class Home extends JFrame {
         JScrollPane scrollProjetos = new JScrollPane(tabelaProjetos);
         painelProjetos.add(scrollProjetos, BorderLayout.CENTER);
 
-// Painel de cadastro de projetos
         JPanel painelCadastroProjetos = new JPanel(new BorderLayout(10, 10));
         painelCadastroProjetos.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição de Projetos"));
 
@@ -94,7 +88,6 @@ public class Home extends JFrame {
 
         painelCadastroProjetos.add(painelCamposProjetos, BorderLayout.NORTH);
 
-// Botões
         JPanel painelBotoesProjetos = new JPanel(new FlowLayout());
         JButton btnNovoProjeto = new JButton("Novo");
         JButton btnSalvarProjeto = new JButton("Salvar");
@@ -107,13 +100,11 @@ public class Home extends JFrame {
         painelProjetos.add(painelCadastroProjetos, BorderLayout.EAST);
         abas.addTab("Projetos", painelProjetos);
 
-// === ABA RELATÓRIOS ===
         JPanel abaRelatorios = new JPanel(new BorderLayout(10, 10));
         JTextArea areaRelatorio = new JTextArea();
         areaRelatorio.setEditable(false);
         abaRelatorios.add(new JScrollPane(areaRelatorio), BorderLayout.CENTER);
 
-// Filtros
         JPanel painelFiltros = new JPanel(new FlowLayout());
         JComboBox<String> cmbTipoRelatorio = new JComboBox<>(new String[]{"Projetos", "Tarefas"});
         JComboBox<String> cmbFiltroStatus = new JComboBox<>(new String[]{"Todos", "Planejado", "Em andamento", "Concluído", "Pendente", "Em execução"});
@@ -131,7 +122,6 @@ public class Home extends JFrame {
 
         abaRelatorios.add(painelFiltros, BorderLayout.NORTH);
 
-// Ações dos botões
         btnGerarRelatorio.addActionListener(e -> {
             areaRelatorio.setText("");
             String tipo = (String) cmbTipoRelatorio.getSelectedItem();
@@ -139,13 +129,13 @@ public class Home extends JFrame {
 
             if ("Projetos".equals(tipo)) {
                 areaRelatorio.append("===== RELATÓRIO DE PROJETOS =====\n");
-                for (Projetos p : listaProjetos) {
-                    if ("Todos".equals(filtro) || p.status.equals(filtro)) {
-                        areaRelatorio.append("Projeto: " + p.getTitulo() + "\n");
-                        areaRelatorio.append("Responsável: " + p.responsavel + "\n");
-                        areaRelatorio.append("Status: " + p.status + "\n");
-                        areaRelatorio.append("Período: " + p.dataInicio + " até " + p.dataFim + "\n");
-                        areaRelatorio.append("Descrição: " + p.descricao + "\n");
+                for (Projeto p : listaProjetos) {
+                    if ("Todos".equals(filtro) || p.getStatus().equals(filtro)) {
+                        areaRelatorio.append("Projeto: " + p.getNome() + "\n");
+                        areaRelatorio.append("Responsável: " + p.getResponsavel() + "\n");
+                        areaRelatorio.append("Status: " + p.getStatus() + "\n");
+                        areaRelatorio.append("Período: " + p.getDataInicio() + " até " + p.getDataFim() + "\n");
+                        areaRelatorio.append("Descrição: " + p.getDescricao() + "\n");
                         areaRelatorio.append("---------------------------------\n");
                     }
                 }
@@ -154,7 +144,7 @@ public class Home extends JFrame {
                 for (Tarefas t : listaTarefas) {
                     if ("Todos".equals(filtro) || t.getStatus().equals(filtro)) {
                         areaRelatorio.append("Tarefa: " + t.getTitulo() + "\n");
-                        areaRelatorio.append("Projeto: " + t.getProjetoVinculado().getTitulo() + "\n");
+                        areaRelatorio.append("Projeto: " + t.getProjetoVinculado().getNome() + "\n");
                         areaRelatorio.append("Responsável: " + t.getResponsavel().getNome() + "\n");
                         areaRelatorio.append("Status: " + t.getStatus() + "\n");
                         areaRelatorio.append("Previsto: " + t.getDataInicioPrevista() + " até " + t.getDataFimPrevista() + "\n");
@@ -186,11 +176,9 @@ public class Home extends JFrame {
 
         abas.addTab("Relatórios", abaRelatorios);
 
-        // --- ABA DE TAREFAS ---
         JPanel painelTarefas = criarPainelTarefas();
         abas.addTab("Tarefas", painelTarefas);
 
-        // Aba Sair
         JPanel abaSair = new JPanel();
         JButton btnSair = new JButton("Sair do Sistema");
         btnSair.addActionListener(e -> System.exit(0));
@@ -206,11 +194,9 @@ public class Home extends JFrame {
         setVisible(true);
     }
 
-    // Método para criar o painel de Tarefas
     private JPanel criarPainelTarefas() {
         JPanel painelPrincipal = new JPanel(new BorderLayout(10, 10));
 
-        // Painel esquerdo com a tabela
         String[] colunas = {"Título", "Projeto", "Responsável", "Status", "Início Previsto", "Fim Previsto"};
         modeloTabelaTarefas = new DefaultTableModel(null, colunas) {
             @Override
@@ -223,14 +209,12 @@ public class Home extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tabelaTarefas);
         painelPrincipal.add(scrollPane, BorderLayout.CENTER);
 
-        // Adiciona um listener para a tabela
         tabelaTarefas.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && tabelaTarefas.getSelectedRow() != -1) {
                 exibirTarefaSelecionada();
             }
         });
 
-        // Painel direito com o formulário de cadastro/edição
         JPanel painelCadastro = new JPanel(new BorderLayout(10, 10));
         painelCadastro.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição de Tarefas"));
 
@@ -283,7 +267,6 @@ public class Home extends JFrame {
         painelBotoes.add(btnExcluirTarefa);
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
-        // Adiciona listeners para os botões
         btnNovoTarefa.addActionListener(e -> limparFormularioTarefas());
         btnSalvarTarefa.addActionListener(e -> salvarTarefa());
         btnExcluirTarefa.addActionListener(e -> excluirTarefa());
@@ -294,35 +277,31 @@ public class Home extends JFrame {
     }
 
     private void carregarDadosExemplo() {
-        // Carrega projetos de exemplo
-        listaProjetos.add(new Projetos("Projeto A", "Descrição A", "01/09/2025", "30/09/2025", "Planejado", "Caio"));
-        listaProjetos.add(new Projetos("Projeto B", "Descrição B", "05/09/2025", "10/10/2025", "Em andamento", "Caio"));
+        listaProjetos.add(new Projeto(1, "Projeto A", "Descrição A", "01/09/2025", "30/09/2025", "Caio", "Equipe 1", "Planejado"));
+        listaProjetos.add(new Projeto(2, "Projeto B", "Descrição B", "05/09/2025", "10/10/2025", "Caio", "Equipe 2", "Em andamento"));
 
-        // Carrega usuários de exemplo
         listaUsuarios.add(new Usuario("1", "Admin", "000", "admin@e.com", "admin", "admin", "Admin"));
         listaUsuarios.add(new Usuario("2", "Adriano", "333", "adriano@e.com", "adriano", "colaborador", "Colaborador"));
 
-        // Adiciona os itens aos JComboBox
-        for (Projetos p : listaProjetos) {
+        for (Projeto p : listaProjetos) {
             cmbProjetoVinculado.addItem(p);
         }
         for (Usuario u : listaUsuarios) {
             cmbResponsavel.addItem(u);
         }
 
-        // Carrega tarefas de exemplo
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         listaTarefas.add(new Tarefas("Tarefa 1", "Implementar login", listaProjetos.get(0), listaUsuarios.get(0), "Concluída", LocalDate.parse("15/09/2025", formatter), LocalDate.parse("18/09/2025", formatter)));
         listaTarefas.add(new Tarefas("Tarefa 2", "Criar interface de cadastro", listaProjetos.get(1), listaUsuarios.get(1), "Em execução", LocalDate.parse("20/09/2025", formatter), LocalDate.parse("25/09/2025", formatter)));
     }
 
     private void preencherTabelaTarefas() {
-        modeloTabelaTarefas.setRowCount(0); // Limpa a tabela
+        modeloTabelaTarefas.setRowCount(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         for (Tarefas t : listaTarefas) {
             Object[] linha = new Object[]{
                     t.getTitulo(),
-                    t.getProjetoVinculado().getTitulo(),
+                    t.getProjetoVinculado().getNome(),
                     t.getResponsavel().getNome(),
                     t.getStatus(),
                     t.getDataInicioPrevista() != null ? t.getDataInicioPrevista().format(formatter) : "",
@@ -366,7 +345,7 @@ public class Home extends JFrame {
         try {
             String titulo = txtTitulo.getText();
             String descricao = txtDescricao.getText();
-            Projetos projeto = (Projetos) cmbProjetoVinculado.getSelectedItem();
+            Projeto projeto = (Projeto) cmbProjetoVinculado.getSelectedItem();
             Usuario responsavel = (Usuario) cmbResponsavel.getSelectedItem();
             String status = (String) cmbStatus.getSelectedItem();
 
@@ -416,71 +395,6 @@ public class Home extends JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "Selecione uma tarefa para excluir.");
-        }
-    }
-
-    // Você precisará da classe Usuario em seu próprio arquivo: Usuario.java
-    public static class Usuario {
-        private String id;
-        private String nome;
-        private String cpf;
-        private String email;
-        private String login;
-        private String cargo;
-        private String perfil;
-
-        public Usuario(String id, String nome, String cpf, String email, String login, String cargo, String perfil) {
-            this.id = id;
-            this.nome = nome;
-            this.cpf = cpf;
-            this.email = email;
-            this.login = login;
-            this.cargo = cargo;
-            this.perfil = perfil;
-        }
-
-        public String getNome() {
-            return nome;
-        }
-
-        public String getCpf() { return cpf; }
-        public String getEmail() { return email; }
-        public String getCargo() { return cargo; }
-        public String getLogin() { return login; }
-        public String getPerfil() { return perfil; }
-        public String getId() { return id; }
-
-        @Override
-        public String toString() {
-            return nome;
-        }
-    }
-
-    // Você precisará da classe Projetos em seu próprio arquivo: Projetos.java
-    public static class Projetos {
-        private String titulo;
-        private String descricao;
-        private String dataInicio;
-        private String dataFim;
-        private String status;
-        private String responsavel;
-
-        public Projetos(String titulo, String descricao, String dataInicio, String dataFim, String status, String responsavel) {
-            this.titulo = titulo;
-            this.descricao = descricao;
-            this.dataInicio = dataInicio;
-            this.dataFim = dataFim;
-            this.status = status;
-            this.responsavel = responsavel;
-        }
-
-        public String getTitulo() {
-            return titulo;
-        }
-
-        @Override
-        public String toString() {
-            return titulo;
         }
     }
 
