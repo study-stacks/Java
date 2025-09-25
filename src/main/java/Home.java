@@ -1,30 +1,30 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends JFrame {
-    private List<Projeto> listaProjetos = new ArrayList<>();
-    private List<Usuario> listaUsuarios = new ArrayList<>();
-    private List<Tarefas> listaTarefas = new ArrayList<>();
-
     private JTable tabelaTarefas;
     private DefaultTableModel modeloTabelaTarefas;
-    private JTextField txtTitulo, txtDescricao, txtDataInicioPrevista, txtDataFimPrevista, txtDataInicioReal, txtDataFimReal;
+    private JTextField txtTitulo, txtDescricao, txtDataInicioPrevista, txtDataFimPrevista;
     private JComboBox<String> cmbStatus;
     private JComboBox<Projeto> cmbProjetoVinculado;
     private JComboBox<Usuario> cmbResponsavel;
     private JButton btnNovoTarefa, btnSalvarTarefa, btnExcluirTarefa;
+    private UsuarioDAO usuarioDAO;
+    private ProjetoDAO projetoDAO;
+    private TarefaDAO tarefaDAO;
+    private List<Tarefas> listaDeTarefasAtual;
 
     public Home() {
+        this.usuarioDAO = new UsuarioDAO();
+        this.projetoDAO = new ProjetoDAO();
+        this.tarefaDAO = new TarefaDAO();
+
         setTitle("Sistema - Gestão de Projetos");
-        setSize(1000, 600);
+        setSize(1200, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -44,13 +44,13 @@ public class Home extends JFrame {
 
         TelaUsuarios telaUsuarios = new TelaUsuarios();
         abas.addTab("Usuários", telaUsuarios);
-        CadastroProjeto telaProjetos = new CadastroProjeto(listaProjetos, listaUsuarios);
+        CadastroProjeto telaProjetos = new CadastroProjeto();
         abas.addTab("Projetos", telaProjetos);
 
         JPanel painelTarefas = criarPainelTarefas();
         abas.addTab("Tarefas", painelTarefas);
 
-        Relatorio telaRelatorios = new Relatorio(listaProjetos, listaTarefas);
+        Relatorio telaRelatorios = new Relatorio();
         abas.addTab("Relatórios", telaRelatorios);
 
         JPanel abaSair = new JPanel();
@@ -62,14 +62,12 @@ public class Home extends JFrame {
         painelPrincipal.add(abas, BorderLayout.CENTER);
         add(painelPrincipal);
 
-        carregarDadosExemplo();
-        telaUsuarios.setListaUsuarios(listaUsuarios);
-        telaProjetos.atualizarResponsaveis();
         preencherTabelaTarefas();
 
-        telaUsuarios.addPropertyChangeListener("usuariosAtualizados", evt -> {
-            telaProjetos.atualizarResponsaveis();
-            atualizarResponsaveisTarefas();
+        abas.addChangeListener(e -> {
+            if (abas.getSelectedIndex() == 3) {
+                atualizarCombosTarefas();
+            }
         });
 
         setVisible(true);
@@ -77,6 +75,7 @@ public class Home extends JFrame {
 
     private JPanel criarPainelTarefas() {
         JPanel painelPrincipal = new JPanel(new BorderLayout(10, 10));
+        painelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         String[] colunas = {"Título", "Projeto", "Responsável", "Status", "Início Previsto", "Fim Previsto"};
         modeloTabelaTarefas = new DefaultTableModel(null, colunas) {
@@ -90,56 +89,59 @@ public class Home extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tabelaTarefas);
         painelPrincipal.add(scrollPane, BorderLayout.CENTER);
 
-        tabelaTarefas.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting() && tabelaTarefas.getSelectedRow() != -1) {
-                exibirTarefaSelecionada();
-            }
-        });
-
         JPanel painelCadastro = new JPanel(new BorderLayout(10, 10));
         painelCadastro.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição de Tarefas"));
 
-        JPanel painelCampos = new JPanel(new GridLayout(0, 2, 5, 5));
-        painelCampos.add(new JLabel("Título:"));
-        txtTitulo = new JTextField();
-        painelCampos.add(txtTitulo);
+        JPanel painelCampos = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
 
-        painelCampos.add(new JLabel("Descrição:"));
+        gbc.gridx = 0; gbc.gridy = 0;
+        painelCampos.add(new JLabel("Título:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0; gbc.fill = GridBagConstraints.HORIZONTAL;
+        txtTitulo = new JTextField(15);
+        painelCampos.add(txtTitulo, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0; gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Descrição:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         txtDescricao = new JTextField();
-        painelCampos.add(txtDescricao);
+        painelCampos.add(txtDescricao, gbc);
 
-        painelCampos.add(new JLabel("Projeto:"));
+        gbc.gridx = 0; gbc.gridy = 2; gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Projeto:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         cmbProjetoVinculado = new JComboBox<>();
-        painelCampos.add(cmbProjetoVinculado);
+        painelCampos.add(cmbProjetoVinculado, gbc);
 
-        painelCampos.add(new JLabel("Responsável:"));
+        gbc.gridx = 0; gbc.gridy = 3; gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Responsável:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         cmbResponsavel = new JComboBox<>();
-        painelCampos.add(cmbResponsavel);
+        painelCampos.add(cmbResponsavel, gbc);
 
-        painelCampos.add(new JLabel("Status:"));
-        String[] statusOpcoes = {"Pendente", "Em execução", "Concluída"};
-        cmbStatus = new JComboBox<>(statusOpcoes);
-        painelCampos.add(cmbStatus);
+        gbc.gridx = 0; gbc.gridy = 4; gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Status:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        cmbStatus = new JComboBox<>(new String[]{"Pendente", "Em execução", "Concluída"});
+        painelCampos.add(cmbStatus, gbc);
 
-        painelCampos.add(new JLabel("Início Previsto (dd/MM/yyyy):"));
+        gbc.gridx = 0; gbc.gridy = 5; gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Início Previsto (dd/MM/yyyy):"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         txtDataInicioPrevista = new JTextField();
-        painelCampos.add(txtDataInicioPrevista);
+        painelCampos.add(txtDataInicioPrevista, gbc);
 
-        painelCampos.add(new JLabel("Fim Previsto (dd/MM/yyyy):"));
+        gbc.gridx = 0; gbc.gridy = 6; gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Fim Previsto (dd/MM/yyyy):"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         txtDataFimPrevista = new JTextField();
-        painelCampos.add(txtDataFimPrevista);
-
-        painelCampos.add(new JLabel("Início Real (dd/MM/yyyy):"));
-        txtDataInicioReal = new JTextField();
-        painelCampos.add(txtDataInicioReal);
-
-        painelCampos.add(new JLabel("Fim Real (dd/MM/yyyy):"));
-        txtDataFimReal = new JTextField();
-        painelCampos.add(txtDataFimReal);
+        painelCampos.add(txtDataFimPrevista, gbc);
 
         painelCadastro.add(painelCampos, BorderLayout.NORTH);
 
-        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnNovoTarefa = new JButton("Novo");
         btnSalvarTarefa = new JButton("Salvar");
         btnExcluirTarefa = new JButton("Excluir");
@@ -148,38 +150,68 @@ public class Home extends JFrame {
         painelBotoes.add(btnExcluirTarefa);
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
+        painelCadastro.setPreferredSize(new Dimension(400, 0));
+        painelPrincipal.add(painelCadastro, BorderLayout.EAST);
+
         btnNovoTarefa.addActionListener(e -> limparFormularioTarefas());
         btnSalvarTarefa.addActionListener(e -> salvarTarefa());
         btnExcluirTarefa.addActionListener(e -> excluirTarefa());
 
-        painelPrincipal.add(painelCadastro, BorderLayout.EAST);
-
         return painelPrincipal;
     }
 
-    private void carregarDadosExemplo() {
-        listaUsuarios.add(new Usuario("1", "Admin", "000", "admin@e.com", "admin", "admin", "Administrador"));
-        listaUsuarios.add(new Usuario("2", "Adriano", "333", "adriano@e.com", "adriano", "colaborador", "Colaborador"));
-
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        listaTarefas.add(new Tarefas("Tarefa 1", "Implementar login", listaProjetos.get(0), listaUsuarios.get(0), "Concluída",
-                LocalDate.parse("15/09/2025", formatter), LocalDate.parse("18/09/2025", formatter)));
-        listaTarefas.add(new Tarefas("Tarefa 2", "Criar interface de cadastro", listaProjetos.get(1), listaUsuarios.get(1), "Em execução",
-                LocalDate.parse("20/09/2025", formatter), LocalDate.parse("25/09/2025", formatter)));
-
-        for (Projeto p : listaProjetos) {
+    private void atualizarCombosTarefas() {
+        cmbProjetoVinculado.removeAllItems();
+        List<Projeto> projetos = projetoDAO.listarTodos();
+        for (Projeto p : projetos) {
             cmbProjetoVinculado.addItem(p);
         }
-        for (Usuario u : listaUsuarios) {
+
+        cmbResponsavel.removeAllItems();
+        List<Usuario> usuarios = usuarioDAO.listarTodos();
+        for (Usuario u : usuarios) {
             cmbResponsavel.addItem(u);
+        }
+    }
+
+    private void salvarTarefa() {
+        try {
+            Projeto projeto = (Projeto) cmbProjetoVinculado.getSelectedItem();
+            Usuario responsavel = (Usuario) cmbResponsavel.getSelectedItem();
+            if (projeto == null || responsavel == null) {
+                JOptionPane.showMessageDialog(this, "Selecione um projeto e um responsável.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            Tarefas novaTarefa = new Tarefas(
+                    0,
+                    txtTitulo.getText(),
+                    txtDescricao.getText(),
+                    projeto,
+                    responsavel,
+                    (String) cmbStatus.getSelectedItem(),
+                    LocalDate.parse(txtDataInicioPrevista.getText(), formatter),
+                    LocalDate.parse(txtDataFimPrevista.getText(), formatter)
+            );
+
+            tarefaDAO.salvar(novaTarefa);
+            JOptionPane.showMessageDialog(this, "Tarefa salva com sucesso!");
+            limparFormularioTarefas();
+            preencherTabelaTarefas();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar tarefa: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 
     private void preencherTabelaTarefas() {
         modeloTabelaTarefas.setRowCount(0);
+        this.listaDeTarefasAtual = tarefaDAO.listarTodas();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        for (Tarefas t : listaTarefas) {
+
+        for (Tarefas t : listaDeTarefasAtual) {
             Object[] linha = {
                     t.getTitulo(),
                     t.getProjetoVinculado().getNome(),
@@ -192,100 +224,37 @@ public class Home extends JFrame {
         }
     }
 
-    private void exibirTarefaSelecionada() {
-        int linhaSelecionada = tabelaTarefas.getSelectedRow();
-        if (linhaSelecionada != -1) {
-            Tarefas tarefa = listaTarefas.get(linhaSelecionada);
-            txtTitulo.setText(tarefa.getTitulo());
-            txtDescricao.setText(tarefa.getDescricao());
-            cmbProjetoVinculado.setSelectedItem(tarefa.getProjetoVinculado());
-            cmbResponsavel.setSelectedItem(tarefa.getResponsavel());
-            cmbStatus.setSelectedItem(tarefa.getStatus());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            txtDataInicioPrevista.setText(tarefa.getDataInicioPrevista().format(formatter));
-            txtDataFimPrevista.setText(tarefa.getDataFimPrevista().format(formatter));
-            txtDataInicioReal.setText(tarefa.getDataInicioReal() != null ? tarefa.getDataInicioReal().format(formatter) : "");
-            txtDataFimReal.setText(tarefa.getDataFimReal() != null ? tarefa.getDataFimReal().format(formatter) : "");
-        }
-    }
-
     private void limparFormularioTarefas() {
         tabelaTarefas.clearSelection();
         txtTitulo.setText("");
         txtDescricao.setText("");
-        cmbProjetoVinculado.setSelectedIndex(-1);
-        cmbResponsavel.setSelectedIndex(-1);
+        if(cmbProjetoVinculado.getItemCount() > 0) cmbProjetoVinculado.setSelectedIndex(0);
+        if(cmbResponsavel.getItemCount() > 0) cmbResponsavel.setSelectedIndex(0);
         cmbStatus.setSelectedIndex(0);
         txtDataInicioPrevista.setText("");
         txtDataFimPrevista.setText("");
-        txtDataInicioReal.setText("");
-        txtDataFimReal.setText("");
-    }
-
-    private void salvarTarefa() {
-        try {
-            String titulo = txtTitulo.getText();
-            String descricao = txtDescricao.getText();
-            Projeto projeto = (Projeto) cmbProjetoVinculado.getSelectedItem();
-            Usuario responsavel = (Usuario) cmbResponsavel.getSelectedItem();
-            String status = (String) cmbStatus.getSelectedItem();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate inicioPrevisto = LocalDate.parse(txtDataInicioPrevista.getText(), formatter);
-            LocalDate fimPrevisto = LocalDate.parse(txtDataFimPrevista.getText(), formatter);
-
-            int linhaSelecionada = tabelaTarefas.getSelectedRow();
-            if (linhaSelecionada == -1) {
-                Tarefas novaTarefa = new Tarefas(titulo, descricao, projeto, responsavel, status, inicioPrevisto, fimPrevisto);
-                listaTarefas.add(novaTarefa);
-                JOptionPane.showMessageDialog(this, "Tarefa cadastrada com sucesso!");
-            } else {
-                Tarefas tarefaExistente = listaTarefas.get(linhaSelecionada);
-                tarefaExistente.setTitulo(titulo);
-                tarefaExistente.setDescricao(descricao);
-                tarefaExistente.setProjetoVinculado(projeto);
-                tarefaExistente.setResponsavel(responsavel);
-                tarefaExistente.setStatus(status);
-                tarefaExistente.setDataInicioPrevista(inicioPrevisto);
-                tarefaExistente.setDataFimPrevista(fimPrevisto);
-                if (!txtDataInicioReal.getText().isEmpty()) {
-                    tarefaExistente.setDataInicioReal(LocalDate.parse(txtDataInicioReal.getText(), formatter));
-                }
-                if (!txtDataFimReal.getText().isEmpty()) {
-                    tarefaExistente.setDataFimReal(LocalDate.parse(txtDataFimReal.getText(), formatter));
-                }
-                JOptionPane.showMessageDialog(this, "Tarefa atualizada com sucesso!");
-            }
-            limparFormularioTarefas();
-            preencherTabelaTarefas();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar tarefa: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void excluirTarefa() {
         int linhaSelecionada = tabelaTarefas.getSelectedRow();
         if (linhaSelecionada != -1) {
-            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir esta tarefa?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+            int confirmacao = JOptionPane.showConfirmDialog(this,
+                    "Tem certeza que deseja excluir esta tarefa?", "Confirmar Exclusão",
+                    JOptionPane.YES_NO_OPTION);
+
             if (confirmacao == JOptionPane.YES_OPTION) {
-                listaTarefas.remove(linhaSelecionada);
+                Tarefas tarefaParaExcluir = listaDeTarefasAtual.get(linhaSelecionada);
+                tarefaDAO.excluir(tarefaParaExcluir.getId());
                 limparFormularioTarefas();
                 preencherTabelaTarefas();
                 JOptionPane.showMessageDialog(this, "Tarefa excluída com sucesso!");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma tarefa para excluir.");
-        }
-    }
-
-    private void atualizarResponsaveisTarefas() {
-        cmbResponsavel.removeAllItems();
-        for (Usuario u : listaUsuarios) {
-            cmbResponsavel.addItem(u);
+            JOptionPane.showMessageDialog(this, "Por favor, selecione uma tarefa na tabela para excluir.");
         }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Home());
+        SwingUtilities.invokeLater(Home::new);
     }
 }

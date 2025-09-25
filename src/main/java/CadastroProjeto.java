@@ -11,18 +11,17 @@ public class CadastroProjeto extends JPanel {
     private JComboBox<Usuario> cmbResponsavelProjeto;
     private JComboBox<String> cmbStatusProjeto;
     private JButton btnNovoProjeto, btnSalvarProjeto, btnExcluirProjeto;
+    private ProjetoDAO projetoDAO;
+    private UsuarioDAO usuarioDAO;
 
-    private List<Projeto> listaProjetos;
-    private List<Usuario> listaUsuarios;
-
-    public CadastroProjeto(List<Projeto> listaProjetos, List<Usuario> listaUsuarios) {
-        this.listaProjetos = listaProjetos;
-        this.listaUsuarios = listaUsuarios;
+    public CadastroProjeto() {
+        this.projetoDAO = new ProjetoDAO();
+        this.usuarioDAO = new UsuarioDAO();
 
         setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createTitledBorder("Gerenciamento de Projetos"));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        String[] colunas = {"ID", "Nome", "Responsável", "Descrição", "Status", "Início", "Fim"};
+        String[] colunas = {"ID", "Nome", "Responsável", "Status", "Início", "Fim"};
         modeloTabelaProjetos = new DefaultTableModel(null, colunas) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -31,51 +30,89 @@ public class CadastroProjeto extends JPanel {
         };
         tabelaProjetos = new JTable(modeloTabelaProjetos);
         tabelaProjetos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scroll = new JScrollPane(tabelaProjetos);
-        add(scroll, BorderLayout.CENTER);
+        add(new JScrollPane(tabelaProjetos), BorderLayout.CENTER);
 
         JPanel painelCadastro = new JPanel(new BorderLayout(10, 10));
-        painelCadastro.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição de Projetos"));
+        painelCadastro.setBorder(BorderFactory.createTitledBorder("Cadastro/Edição"));
 
-        JPanel painelCampos = new JPanel(new GridLayout(0, 2, 5, 5));
+        JPanel painelCampos = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
 
-        painelCampos.add(new JLabel("Nome do Projeto:"));
-        txtNomeProjeto = new JTextField();
-        painelCampos.add(txtNomeProjeto);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        painelCampos.add(new JLabel("Nome do Projeto:"), gbc);
 
-        painelCampos.add(new JLabel("Responsável:"));
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        txtNomeProjeto = new JTextField(15);
+        painelCampos.add(txtNomeProjeto, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Responsável:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         cmbResponsavelProjeto = new JComboBox<>();
-        painelCampos.add(cmbResponsavelProjeto);
+        painelCampos.add(cmbResponsavelProjeto, gbc);
 
-        painelCampos.add(new JLabel("Descrição:"));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Descrição:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         txtDescricaoProjeto = new JTextField();
-        painelCampos.add(txtDescricaoProjeto);
+        painelCampos.add(txtDescricaoProjeto, gbc);
 
-        painelCampos.add(new JLabel("Status:"));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Status:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         cmbStatusProjeto = new JComboBox<>(new String[]{"Planejado", "Em andamento", "Concluído"});
-        painelCampos.add(cmbStatusProjeto);
+        painelCampos.add(cmbStatusProjeto, gbc);
 
-        painelCampos.add(new JLabel("Data Início (dd/MM/yyyy):"));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Data Início (dd/MM/yyyy):"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         txtDataInicioProjeto = new JTextField();
-        painelCampos.add(txtDataInicioProjeto);
+        painelCampos.add(txtDataInicioProjeto, gbc);
 
-        painelCampos.add(new JLabel("Data Fim (dd/MM/yyyy):"));
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.NONE;
+        painelCampos.add(new JLabel("Data Fim (dd/MM/yyyy):"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         txtDataFimProjeto = new JTextField();
-        painelCampos.add(txtDataFimProjeto);
+        painelCampos.add(txtDataFimProjeto, gbc);
 
         painelCadastro.add(painelCampos, BorderLayout.NORTH);
 
-        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnNovoProjeto = new JButton("Novo");
         btnSalvarProjeto = new JButton("Salvar");
         btnExcluirProjeto = new JButton("Excluir");
-
         painelBotoes.add(btnNovoProjeto);
         painelBotoes.add(btnSalvarProjeto);
         painelBotoes.add(btnExcluirProjeto);
-
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
+        painelCadastro.setPreferredSize(new Dimension(400, 0));
         add(painelCadastro, BorderLayout.EAST);
 
         btnNovoProjeto.addActionListener(e -> limparFormulario());
@@ -83,38 +120,25 @@ public class CadastroProjeto extends JPanel {
         btnExcluirProjeto.addActionListener(e -> excluirProjeto());
 
         atualizarResponsaveis();
-        carregarProjetosFixos();
         preencherTabela();
     }
 
-    private void carregarProjetosFixos() {
-        if (listaProjetos.isEmpty()) {
-            Usuario responsavelPadrao = listaUsuarios.isEmpty() ? new Usuario("0", "Admin", "", "", "", "", "Admin") : listaUsuarios.get(0);
-
-            listaProjetos.add(new Projeto(1, "Projeto A", "Descrição A", "01/09/2025", "30/09/2025", responsavelPadrao, "Planejado"));
-            listaProjetos.add(new Projeto(2, "Projeto B", "Descrição B", "05/09/2025", "10/10/2025", responsavelPadrao, "Em andamento"));
-        }
-    }
-
     public void atualizarResponsaveis() {
-        if (cmbResponsavelProjeto == null) return;
         cmbResponsavelProjeto.removeAllItems();
-        for (Usuario u : listaUsuarios) {
+        List<Usuario> usuarios = usuarioDAO.listarTodos();
+        for (Usuario u : usuarios) {
             cmbResponsavelProjeto.addItem(u);
-        }
-        if (cmbResponsavelProjeto.getItemCount() > 0) {
-            cmbResponsavelProjeto.setSelectedIndex(0);
         }
     }
 
     private void preencherTabela() {
         modeloTabelaProjetos.setRowCount(0);
-        for (Projeto p : listaProjetos) {
+        List<Projeto> projetos = projetoDAO.listarTodos();
+        for (Projeto p : projetos) {
             Object[] linha = {
                     p.getId(),
                     p.getNome(),
                     p.getResponsavel().getNome(),
-                    p.getDescricao(),
                     p.getStatus(),
                     p.getDataInicio(),
                     p.getDataFim()
@@ -128,55 +152,46 @@ public class CadastroProjeto extends JPanel {
         txtDescricaoProjeto.setText("");
         txtDataInicioProjeto.setText("");
         txtDataFimProjeto.setText("");
-        cmbResponsavelProjeto.setSelectedIndex(-1);
+        if (cmbResponsavelProjeto.getItemCount() > 0) {
+            cmbResponsavelProjeto.setSelectedIndex(0);
+        }
         cmbStatusProjeto.setSelectedIndex(0);
         tabelaProjetos.clearSelection();
     }
 
     private void salvarProjeto() {
         try {
-            String nome = txtNomeProjeto.getText();
-            String descricao = txtDescricaoProjeto.getText();
-            String dataInicio = txtDataInicioProjeto.getText();
-            String dataFim = txtDataFimProjeto.getText();
             Usuario responsavel = (Usuario) cmbResponsavelProjeto.getSelectedItem();
-            String status = (String) cmbStatusProjeto.getSelectedItem();
-
-            int linhaSelecionada = tabelaProjetos.getSelectedRow();
-            if (linhaSelecionada == -1) {
-                Projeto novo = new Projeto(listaProjetos.size() + 1, nome, descricao, dataInicio, dataFim, responsavel, status);
-                listaProjetos.add(novo);
-                JOptionPane.showMessageDialog(this, "Projeto cadastrado com sucesso!");
-            } else {
-                Projeto existente = listaProjetos.get(linhaSelecionada);
-                existente.setNome(nome);
-                existente.setDescricao(descricao);
-                existente.setDataInicio(dataInicio);
-                existente.setDataFim(dataFim);
-                existente.setResponsavel(responsavel);
-                existente.setStatus(status);
-                JOptionPane.showMessageDialog(this, "Projeto atualizado com sucesso!");
+            if (responsavel == null) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecione um responsável.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            Projeto novo = new Projeto(
+                    0,
+                    txtNomeProjeto.getText(),
+                    txtDescricaoProjeto.getText(),
+                    txtDataInicioProjeto.getText(),
+                    txtDataFimProjeto.getText(),
+                    responsavel,
+                    (String) cmbStatusProjeto.getSelectedItem()
+            );
+            projetoDAO.salvar(novo);
+            JOptionPane.showMessageDialog(this, "Projeto cadastrado com sucesso!");
             limparFormulario();
             preencherTabela();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar projeto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 
     private void excluirProjeto() {
         int linhaSelecionada = tabelaProjetos.getSelectedRow();
         if (linhaSelecionada != -1) {
-            Projeto selecionado = listaProjetos.get(linhaSelecionada);
-
-            if (selecionado.getId() <= 2) {
-                JOptionPane.showMessageDialog(this, "Projetos fixos não podem ser excluídos!");
-                return;
-            }
-
-            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este projeto?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+            int idProjeto = (int) modeloTabelaProjetos.getValueAt(linhaSelecionada, 0);
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
             if (confirmacao == JOptionPane.YES_OPTION) {
-                listaProjetos.remove(linhaSelecionada);
+                projetoDAO.excluir(idProjeto);
                 limparFormulario();
                 preencherTabela();
                 JOptionPane.showMessageDialog(this, "Projeto excluído com sucesso!");

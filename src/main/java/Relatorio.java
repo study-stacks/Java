@@ -9,12 +9,12 @@ public class Relatorio extends JPanel {
     private JComboBox<String> cmbTipoRelatorio;
     private JComboBox<String> cmbFiltroStatus;
 
-    private List<Projeto> listaProjetos;
-    private List<Tarefas> listaTarefas;
+    private ProjetoDAO projetoDAO;
+    private TarefaDAO tarefaDAO;
 
-    public Relatorio(List<Projeto> listaProjetos, List<Tarefas> listaTarefas) {
-        this.listaProjetos = listaProjetos;
-        this.listaTarefas = listaTarefas;
+    public Relatorio() {
+        this.projetoDAO = new ProjetoDAO();
+        this.tarefaDAO = new TarefaDAO();
 
         setLayout(new BorderLayout(10, 10));
 
@@ -53,6 +53,7 @@ public class Relatorio extends JPanel {
         String filtro = (String) cmbFiltroStatus.getSelectedItem();
 
         if ("Projetos".equals(tipo)) {
+            List<Projeto> listaProjetos = projetoDAO.listarTodos();
             areaRelatorio.append("===== RELATÓRIO DE PROJETOS =====\n");
             for (Projeto p : listaProjetos) {
                 if ("Todos".equals(filtro) || p.getStatus().equals(filtro)) {
@@ -66,6 +67,7 @@ public class Relatorio extends JPanel {
                 }
             }
         } else {
+            List<Tarefas> listaTarefas = tarefaDAO.listarTodas();
             areaRelatorio.append("===== RELATÓRIO DE TAREFAS =====\n");
             for (Tarefas t : listaTarefas) {
                 if ("Todos".equals(filtro) || t.getStatus().equals(filtro)) {
