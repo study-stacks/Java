@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login extends JFrame {
     private JTextField txtUsuario;
@@ -45,15 +48,37 @@ public class Login extends JFrame {
             String usuario = txtUsuario.getText();
             String senha = new String(txtSenha.getPassword());
 
-            if ("admin".equals(usuario) && "123".equals(senha)) {
+            if (validarLogin(usuario, senha)) {
                 dispose();
                 new Home();
             } else {
-                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos");
+                JOptionPane.showMessageDialog(this,
+                        "Usuário ou senha inválidos",
+                        "Erro de Login",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
         setVisible(true);
+    }
+
+    private boolean validarLogin(String login, String senha) {
+        String sql = "SELECT * FROM usuarios WHERE login = ? AND senha = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, login.trim());
+            pstmt.setString(2, senha.trim());
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao validar login: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 
 public class Tarefas {
+    private int id;
     private String titulo;
     private String descricao;
     private Projeto projetoVinculado;
@@ -11,7 +12,8 @@ public class Tarefas {
     private LocalDate dataInicioReal;
     private LocalDate dataFimReal;
 
-    public Tarefas(String titulo, String descricao, Projeto projetoVinculado, Usuario responsavel, String status, LocalDate dataInicioPrevista, LocalDate dataFimPrevista) {
+    public Tarefas(int id, String titulo, String descricao, Projeto projetoVinculado, Usuario responsavel, String status, LocalDate dataInicioPrevista, LocalDate dataFimPrevista) {
+        this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.projetoVinculado = projetoVinculado;
@@ -21,6 +23,7 @@ public class Tarefas {
         this.dataFimPrevista = dataFimPrevista;
     }
 
+    public int getId() { return id; }
     public String getTitulo() { return titulo; }
     public String getDescricao() { return descricao; }
     public Projeto getProjetoVinculado() { return projetoVinculado; }
@@ -31,6 +34,7 @@ public class Tarefas {
     public LocalDate getDataInicioReal() { return dataInicioReal; }
     public LocalDate getDataFimReal() { return dataFimReal; }
 
+    public void setId(int id) { this.id = id; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
     public void setProjetoVinculado(Projeto projetoVinculado) { this.projetoVinculado = projetoVinculado; }
